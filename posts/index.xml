@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>How and Why</title>
-    <link>https://atlowther.github.io/</link>
-    <description>Recent content on How and Why</description>
+    <title>Posts on How and Why</title>
+    <link>https://atlowther.github.io/posts/</link>
+    <description>Recent content in Posts on How and Why</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 05 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://atlowther.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://atlowther.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Some thoughts on CPU threads</title>
-      <link>https://atlowther.github.io/notes/threads/</link>
-      <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://atlowther.github.io/notes/threads/</guid>
-      <description>Multithreaded I&amp;rsquo;m currently reading about threads. Multithreading seems to allow multiple &amp;ldquo;controllers&amp;rdquo; for a single process. For instance, maybe while using the Spotify app, I am both able to listen to music being streamed through the app and search for a different song to listen to, simultaneously. One thread is handling the streaming, while one thread is handling my input, while maybe even another thread is handling the actual logic for the search query.</description>
-    </item>
     
     <item>
       <title>Some thoughts on CPU threads</title>

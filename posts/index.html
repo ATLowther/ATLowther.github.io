@@ -1,3 +1,11 @@
+
+
+
+    
+
+
+
+
 <!DOCTYPE HTML>
 
 <html>
@@ -10,9 +18,9 @@
              "@type": "WebPage",
              "@id": "https://atlowther.github.io/"
         },
-        "articleSection" : "",
-        "name" : "How and Why",
-        "headline" : "How and Why",
+        "articleSection" : "posts",
+        "name" : "Posts",
+        "headline" : "Posts",
         "description" : "",
         "inLanguage" : "en",
         "author" : "",
@@ -23,15 +31,13 @@
         "copyrightYear" : "2018",
         "datePublished": "2018-03-05 00:00:00 &#43;0000 UTC",
         "dateModified" : "2018-03-05 00:00:00 &#43;0000 UTC",
-        "url" : "https://atlowther.github.io/",
+        "url" : "https://atlowther.github.io/posts/",
         "wordCount" : "0",
         "keywords" : [ "Blog" ]
     }
     </script>
         
-            
-                <title>How and Why</title>
-            
+            <title>Posts - How and Why</title>
         
 
         <meta charset="utf-8" />
@@ -48,13 +54,13 @@
         
 
         <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="How and Why"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="Blog about life, learning and programming"/>
 
-        <meta property="og:title" content="How and Why" />
+        <meta property="og:title" content="Posts" />
 <meta property="og:description" content="Blog about life, learning and programming" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://atlowther.github.io/" />
+<meta property="og:url" content="https://atlowther.github.io/posts/" />
 
 
 
@@ -74,7 +80,7 @@
         <meta property="og:image:width" content="512">
         <meta property="og:image:height" content="512">
         
-<meta itemprop="name" content="How and Why">
+<meta itemprop="name" content="Posts">
 <meta itemprop="description" content="Blog about life, learning and programming">
 
 
@@ -116,10 +122,9 @@
       <div id="wrapper">
 
     
-    
 <header id="header">
     
-      <h1><a href="https://atlowther.github.io/">How and Why</a></h1>
+      <h1><a href="https://atlowther.github.io/">posts</a></h1>
     
 
     <nav class="links">
@@ -147,10 +152,6 @@
     </nav>
     <nav class="main">
         <ul>
-            
-            <li id="share-nav" class="share-menu" style="display:none;">
-                <a class="fa-share-alt" href="#share-menu">Share</a>
-            </li>
             
             <li class="search">
                 <a class="fa-search" href="#search">Search</a>
@@ -257,11 +258,12 @@
     
     <div id="main">
         
+        
             <article class="post">
   <header>
     <div class="title">
         
-            <h2><a href="https://atlowther.github.io/notes/threads/">Some thoughts on CPU threads</a></h2>
+            <h2><a href="https://atlowther.github.io/posts/threads/">Some thoughts on CPU threads</a></h2>
         
         
     </div>
@@ -279,91 +281,15 @@
     </div>
 </header>
 
-
   
 
   
-
-  <div id="content">
-    
-
-<h1 id="multithreaded">Multithreaded</h1>
-
-<p>I&rsquo;m currently reading about threads. Multithreading seems to allow multiple &ldquo;controllers&rdquo; for a single process. For instance, maybe while using the Spotify app, I am both able to listen to music being streamed through the app and search for a different song to listen to, simultaneously. One thread is handling the streaming, while one thread is handling my input, while maybe even another thread is handling the actual logic for the search query.</p>
-
-<p>This seems to be a major benefit over a single threaded application as a single threaded Spotify application may only allow me to listen to music, or to search for other songs, but not both simultaneously.</p>
-
-<h1 id="singlethreaded">Singlethreaded</h1>
-
-<p>Now, if I am understanding correctly, a single blocking thread receives a system call and executes that system call until completion in the meanwhile, blocking other system calls. Then, assuming no other process produces a system call, the thread may handle the next step of processing for that data, say, for a web server.</p>
-
-<h1 id="an-example-to-distinguish-the-two">An example to distinguish the two</h1>
-
-<p>Following an example given in the book, an scenario may be:
-The thread reads the incoming data coming through the network card. Then the thread checks the cache for the requested file, if it is not in the cache, it fetches it from the file system and returns it to the user.</p>
-
-<p>This raises a few questions for me: Are system calls often coupled together? What exactly deems something as needing to run as the kernel? Anything directly dealing with the hardware, right?</p>
-
-<h1 id="thoughts-and-questions-about-what-this-really-means">Thoughts and questions about what this really means</h1>
-
-<ol>
-<li>So for incoming data to a network card, I assume the access the incoming stream, that requires a system call. But then how do you handle the system stream?
-Is there memory in the network card itself where it is automatically buffered in?<br />
-
-<ul>
-<li>Where is this incoming data intially stored &amp; does it need to be moved?<br />
-
-<ul>
-<li>If so, is it moved into main memory?  I believe a system call is needed to allocate new memory for a process.
-
-<ol>
-<li>So does this mean that when the web server is initially set up, it is allocated memory space     just for this purpose?<br /></li>
-<li>Is that what the buffer is?<br /></li>
-<li>The stream comes in directly to the buffer and everything is okay as long as the request is smaller than the allocated memory for that process?</li>
-</ol></li>
-</ul></li>
-</ul></li>
-
-<li><p>However the data gets in, now we have it, and we check the request to see what the user wants. We then check the cache to see if the requested data is here without needing to access the file system.
-Is the cache a part of the memory allocated for the web server process, or is it a cross-process request, which I assume take a system call?</p></li>
-
-<li><p>If the requested data isn&rsquo;t in the cache, then a system call must be made to the file server in order to retrieve the requested data from the file system.
-The requested data must then be sent back to the requester.
-Does the output through the network card require a separate system call?</p></li>
-</ol>
-
-<p>So this process being done on single blocking thread means that only one of these items is happening at a time and everything else within the same process is on hold until they&rsquo;re all finished.</p>
-
-<h1 id="how-does-a-multithreaded-application-really-distinguish-itself-from-singlethreaded">How does a multithreaded application really distinguish itself from singlethreaded</h1>
-
-<p>Now apparently with multiple threads, even while one thread is getting the requested data from the file system, another thread can still be listening for another incoming request. This is where I get kind of lost. I could understand an analogy such that there is one person at the door greeeting people, another person asking for their orders and a third person getting their order from the kitchen if it isn&rsquo;t already out. BUT I can&rsquo;t connect that with the computer. In the analogy there are three separate people, but with a multithreaded, single core processor(for this example), can&rsquo;t only one system call be made at a time? I think this is where some of the abstractions of what is happening with the computer hardware leaves me baffled.
-Is this where multiple buses come into play?
-    Is different information traveling across different buses, or is there one flow and only one bus taking information at a time, through which only one thing can be executed on the CPU at a time?
-    So as opposed to one thread, opening the door, leaving the door with the guest to check their order and maybe having to go to the kitchen to get their order, all the while leaving the door unwatched. One thread can watch the door, and come and tell the system when another person is coming, while the other two threads are in the respective areas?
-        But if a system call can&rsquo;t be made yet, how is this actually faster?
-        Where is the data going?
-        If the data has to stay at the door anyways, why would it matter if there is a person waiting there saying &ldquo;hey, you can&rsquo;t come in just yet&rdquo;?
-            What benefit does this really give?
-            How would this be faster than the data waiting at the door with no-one attending and waiting for the single thread to return?</p>
-
-<h1 id="singlethreaded-non-blocking-like-node-js-i-think">Singlethreaded NON blocking (Like Node.js(I think))</h1>
-
-<p>Following both the single thread and multi threaded blocking style comes the concept I am most intrigued by, yet the most confused by. I&rsquo;ve written quite a bit of my code using the Node.js framework which to my understanding uses a single threaded non-blocking(asynchronous) style.</p>
-
-<p>The book states that in this way, a single thread can do the same thing, but can for example, start a non blocking disk operation. Again, with not understanding some of these abstractions, this seems like magic to me. It seems to present an idea where the thread at the door is able to hand off the job of checking the order of the guest to some magical being who handles it and returns with the necessary information, all the while allowing the thread to stay at the door.</p>
-
-<h1 id="manyyyy-infitinte-loops">MANYYYY Infitinte loops?</h1>
-
-<p>This is simultaneously very intriguing and very frustrating. As something related, but also an aside, the book presents an example of how these threads would work as infinite loops, such that there is a thread at the door just constantly waiting, infinitely attentive for somebody to come to the door. Also, another thread doing it&rsquo;s job greeting the guests and checking their orders, equally in a infinite loop &amp; equally attentive.
-How can all of these infinite loops exist at once?
-    Is this what the scheduler is for?
-        Constantly putting each infinite loop on temporary hold while cycling through all of the infinite loops?
-            If so, yet again, how are multiple threads any faster than single threads if the others are just put on hold while one is doing its job?</p>
-
-  </div>
-
+  <p>I&rsquo;m currently reading about threads. Multithreading seems to allow multiple &ldquo;controllers&rdquo; for a single process. For instance, maybe while using the Spotify app, I am both able to listen to music being streamed through the app and search for a different song to listen to, simultaneously. One thread is handling the streaming, while one thread is handling my input, while maybe even another thread is handling the actual logic for the search query.</p>
   <footer>
-    <ul class="stats">
+    <ul class="actions">
+      <li><a href="https://atlowther.github.io/posts/threads/" class="button big">Continue Reading</a></li>
+    </ul>
+  <ul class="stats">
   <li class="categories">
     <ul>
         
@@ -386,92 +312,21 @@ How can all of these infinite loops exist at once?
 </ul>
 
   </footer>
-
 </article>
 
-    <article class="post">
-        <div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "shortname" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </article>
+        
 
-
+        
 <ul class="actions pagination">
     
+        <li><a href="#" class="disabled button big previous">Previous Page</a></li>
+    
 
+    
+        <li><a href="#" class="disabled button big next">Next Page</a></li>
     
 </ul>
 
-
-
-            <section id="share-menu">
-    <section id="social-share-nav">
-        <ul class="links">
-            <header>
-                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
-            </header>
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li>
-  <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fatlowther.github.io%2fnotes%2fthreads%2f&amp;title=Some%20thoughts%20on%20CPU%20threads" target="_blank" class="share-btn linkedin">
-      <i class="fa fa-linkedin"></i>
-      <p>LinkedIn</p>
-    </a>
-</li>
-
-
-
-
-
-
-
-
-
-
-<li>
-  <a href="mailto:?subject=Check out this post by Austin%20Lowther&amp;body=https%3a%2f%2fatlowther.github.io%2fnotes%2fthreads%2f" target="_blank" class="share-btn email">
-    <i class="fa fa-envelope"></i>
-    <p>Email</p>
-  </a>
-</li>
-
-
-        </ul>
-    </section>
-</section>
-
-        
     </div>
     
 <section id="sidebar">
